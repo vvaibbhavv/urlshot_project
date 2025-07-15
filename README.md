@@ -24,7 +24,7 @@ python manage.py runserver
 
 
 ### ✅ 1. Submit a Screenshot Request (via Postman or curl)
-**POST** `http://127.0.0.1:8000/screenshots`
+POST `http://127.0.0.1:8000/screenshots`
 {
   "url": "https://example.com",
   "webhook_url": "https://webhook.site/your-custom-id"
