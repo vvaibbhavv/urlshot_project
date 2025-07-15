@@ -1,0 +1,17 @@
+# Ignore Python virtual environment
+venv/
+
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*.sqlite3
+
+# Editor files
+*.log
+*.env
+*.vscode/
+.DS_Store
+
+# Ignore media/screenshot output
+screenshots/
+    
