@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: screenshot-api
+    env: python
+    buildCommand: pip install -r requirements.txt && playwright install
+    startCommand: gunicorn urlshot_project.wsgi:application --log-file -
+    envVars:
+      - key: DEBUG
+        value: False
+      - key: PYTHON_VERSION
+        value: 3.11
+      - key: DJANGO_SETTINGS_MODULE
+        value: urlshot_project.settings
+      - key: SECRET_KEY
+        generateValue: true
+
+  - type: worker
+    name: screenshot-worker
+    env: python
+    buildCommand: pip install -r requirements.txt && playwright install
+    startCommand: celery -A urlshot_project worker --loglevel=info --pool=solo
+    envVars:
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: screenshot-redis
+          property: connectionString
+
+databases:
+  - name: screenshot-redis
+    ipAllowList: []

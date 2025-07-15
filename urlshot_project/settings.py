@@ -53,8 +53,14 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'urlshot_project.urls'
 
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+import os
+DEBUG = os.getenv("DEBUG", "True") == "True"
+SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret")
+
+ALLOWED_HOSTS = ["*"]  # You can later restrict this
+
+CELERY_BROKER_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
+CELERY_RESULT_BACKEND = CELERY_BROKER_URL
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'screenshots'
